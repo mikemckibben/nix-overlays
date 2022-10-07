@@ -32,7 +32,7 @@
       in
       rec {
         packages = flake-utils.lib.flattenTree {
-          fly = pkgs.fly;
+          fly6 = pkgs.fly6;
         };
         devShell = pkgs.devshell.mkShell {
           packages = attrValues packages;

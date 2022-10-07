@@ -14,7 +14,7 @@
   outputs =  { self, nixpkgs, flake-utils, devshell, ... }@inputs:
     {
       overlays.default = final: prev: {
-        fly = with final; buildGoModule rec {
+        fly6 = with final; buildGoModule rec {
           pname = "fly";
           version = "6.7.6";
           src = inputs.src;
@@ -45,17 +45,17 @@
       in
       rec {
         packages = flake-utils.lib.flattenTree {
-          fly = pkgs.fly;
+          fly6 = pkgs.fly6;
         };
-        defaultPackage = packages.fly;
-        apps.fly = flake-utils.lib.mkApp { drv = packages.fly; };
-        defaultApp = apps.fly;
+        defaultPackage = packages.fly6;
+        apps.fly6 = flake-utils.lib.mkApp { drv = packages.fly6; };
+        defaultApp = apps.fly6;
         devShell = pkgs.devshell.mkShell {
           commands = [
             {
               name = "fly";
               help = "fly cli";
-              command = "${packages.fly}/bin/fly";
+              command = "${packages.fly6}/bin/fly";
             }
           ];
         };

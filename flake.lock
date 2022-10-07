@@ -97,7 +97,7 @@
         "src": "src"
       },
       "locked": {
-        "narHash": "sha256-iuXRskETcCL9RANy0+AHGhIqI0u3N8qrNlDfS5ERHMw=",
+        "narHash": "sha256-xNWBRhK2wJYhoeGupOejHYbBDS8pDHI0dRr3DT/EiE4=",
         "path": "./pkgs/fly",
         "type": "path"
       },
@@ -124,11 +124,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1664780719,
-        "narHash": "sha256-Oxe6la5dSqRfJogjtY4sRzJjDDqvroJIVkcGEOT87MA=",
+        "lastModified": 1664989420,
+        "narHash": "sha256-Q8IxomUjjmewsoJgO3htkXLfCckQ7HkDJ/ZhdYVf/fA=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "fd54651f5ffb4a36e8463e0c327a78442b26cbe7",
+        "rev": "37bd39839acf99c5b738319f42478296f827f274",
         "type": "github"
       },
       "original": {
