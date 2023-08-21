@@ -19,7 +19,7 @@
 
   in
     {
-      overlays.work =
+      overlays.default =
         foldl' composeExtensions (final: prev: { }) [inputs.fly.overlays.default];
     }
     //
@@ -27,7 +27,7 @@
       let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ self.overlays.work devshell.overlay ];
+          overlays = [ self.overlays.default devshell.overlays.default ];
         };
       in
       rec {
