@@ -1,10 +1,13 @@
 {
   inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     devshell.url = "github:numtide/devshell";
 
     # subpackage overlays
     fly.url = "path:./pkgs/fly";
+    fly.inputs.nixpkgs.follows = "nixpkgs";
+    fly.inputs.flake-utils.follows = "flake-utils";
   };
 
   outputs =  { self, nixpkgs, flake-utils, devshell, ... }@inputs:
