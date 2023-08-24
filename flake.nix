@@ -5,7 +5,7 @@
     devshell.url = "github:numtide/devshell";
 
     # subpackage overlays
-    fly.url = "path:./pkgs/fly";
+    fly.url = "./pkgs/fly";
     fly.inputs.nixpkgs.follows = "nixpkgs";
     fly.inputs.flake-utils.follows = "flake-utils";
   };
