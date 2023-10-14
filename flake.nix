@@ -1,45 +1,27 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-    devshell.url = "github:numtide/devshell";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    systems.url = "github:nix-systems/default";
 
-    # subpackage overlays
-    fly.url = "./pkgs/fly";
-    fly.inputs.nixpkgs.follows = "nixpkgs";
-    fly.inputs.flake-utils.follows = "flake-utils";
+    fly = {
+      url = "github:concourse/concourse/v6.7.6";
+      flake = false;
+    };
+
+    poetry-monorepo-dependency-plugin = {
+      url = "github:TechnologyBrewery/poetry-monorepo-dependency-plugin/poetry-monorepo-dependency-plugin-1.1.0";
+      flake = false;
+    };
   };
 
-  outputs =  { self, nixpkgs, flake-utils, devshell, ... }@inputs:
-  let
-    inherit (builtins) attrNames attrValues foldl';
-
-    composeExtensions = f: g: final: prev:
-      let
-        fApplied = f final prev;
-        prev' = prev // fApplied;
-      in fApplied // g final prev';
-
-  in
-    {
-      overlays.default =
-        foldl' composeExtensions (final: prev: { }) [inputs.fly.overlays.default];
-    }
-    //
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ self.overlays.default devshell.overlays.default ];
-        };
-      in
-      rec {
-        packages = flake-utils.lib.flattenTree {
-          fly6 = pkgs.fly6;
-        };
-        devShell = pkgs.devshell.mkShell {
-          packages = attrValues packages;
-        };
-      }
-    );
+  outputs = { self, nixpkgs, flake-parts, ... }@inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = import inputs.systems;
+      imports = [
+        flake-parts.flakeModules.easyOverlay
+        ./pkgs/fly
+        ./pkgs/python
+      ];
+    };
 }
