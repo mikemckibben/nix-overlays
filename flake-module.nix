@@ -7,6 +7,14 @@ in
   options = {
     perSystem = mkPerSystemOption ({ ...}: {
       options = {
+        extraPackages = mkOption {
+          description = ''
+            Set of top-level packages either not in standard nixpkgs or using pinned versions
+          '';
+          type = types.lazyAttrsOf types.package;
+          default = {};
+        };
+
         poetryPlugins = mkOption {
           description = ''
             Set of poetry plugin packages to be used with `poetry.withPlugins`
