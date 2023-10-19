@@ -1,11 +1,9 @@
-{ inputs, ...}:
 {
-
-  perSystem = { config, pkgs, ... }: {
+  perSystem = { pkgs, ... }: {
     packages.fly6 = with pkgs; buildGoModule rec {
       pname = "fly";
       version = "6.7.6";
-      src = inputs.fly;
+      src =  ./src;
       doCheck = false;
       subPackages = [ "fly" ];
       vendorSha256 = "sha256-Eyet5cXRpJxFQxiouPNUJcqr9VuQD+yR3vFgISg29Ok=";
@@ -17,10 +15,6 @@
       #   go mod edit -go=1.17 -replace golang.org/x/sys=golang.org/x/sys@
       #   cat go.mod
       # '';
-    };
-
-    overlayAttrs = {
-      inherit (config.packages) fly6;
     };
   };
 }

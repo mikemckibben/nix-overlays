@@ -18,30 +18,13 @@
         "type": "github"
       }
     },
-    "fly": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1616772018,
-        "narHash": "sha256-rTLU4WkojH4vpJs9qNzxCDeivWH1r12Bt2PF+3Fx91Q=",
-        "owner": "concourse",
-        "repo": "concourse",
-        "rev": "5959c4f580d71081060fdfb3d727f703411074ba",
-        "type": "github"
-      },
-      "original": {
-        "owner": "concourse",
-        "ref": "v6.7.6",
-        "repo": "concourse",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1697009197,
-        "narHash": "sha256-viVRhBTFT8fPJTb1N3brQIpFZnttmwo3JVKNuWRVc3s=",
+        "lastModified": 1697379843,
+        "narHash": "sha256-RcnGuJgC2K/UpTy+d32piEoBXq2M+nVFzM3ah/ZdJzg=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "01441e14af5e29c9d27ace398e6dd0b293e25a54",
+        "rev": "12bdeb01ff9e2d3917e6a44037ed7df6e6c3df9d",
         "type": "github"
       },
       "original": {
@@ -69,29 +52,10 @@
         "type": "github"
       }
     },
-    "poetry-monorepo-dependency-plugin": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1694025730,
-        "narHash": "sha256-oTvZ/fNBiLQNLAuc1CEhi6rA5N5AsxdjK/Z5HobxedI=",
-        "owner": "TechnologyBrewery",
-        "repo": "poetry-monorepo-dependency-plugin",
-        "rev": "685eb05b62df09f942fc169a8f844c255ac1d2f1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "TechnologyBrewery",
-        "ref": "poetry-monorepo-dependency-plugin-1.1.0",
-        "repo": "poetry-monorepo-dependency-plugin",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "fly": "fly",
         "nixpkgs": "nixpkgs",
-        "poetry-monorepo-dependency-plugin": "poetry-monorepo-dependency-plugin",
         "systems": "systems"
       }
     },
