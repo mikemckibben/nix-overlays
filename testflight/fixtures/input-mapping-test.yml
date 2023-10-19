@@ -1,0 +1,19 @@
+---
+resources:
+- name: some-resource
+  type: mock
+  source:
+    no_initial_version: true
+    create_files: {"task.yml":((task_content))}
+
+
+jobs:
+- name: upstream-job
+  plan:
+  - get: some-resource
+
+- name: downstream-job
+  plan:
+  - get: some-resource
+    passed: [upstream-job]
+    trigger: true

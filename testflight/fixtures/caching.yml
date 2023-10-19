@@ -1,0 +1,17 @@
+---
+resources:
+- name: some-resource
+  type: mock
+  source:
+    no_initial_version: true
+
+- name: cached-resource
+  type: mock
+  source:
+    no_initial_version: true
+
+jobs:
+- name: some-passing-job
+  plan:
+  - get: some-resource
+  - get: cached-resource
