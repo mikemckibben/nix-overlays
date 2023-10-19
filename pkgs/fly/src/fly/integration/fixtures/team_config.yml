@@ -1,8 +1,0 @@
-roles:
-  - name: member
-    local:
-      users: ["some-user"]
-  - name: owner
-    local:
-      users: ["some-admin"]
-
