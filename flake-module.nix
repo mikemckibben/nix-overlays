@@ -5,7 +5,7 @@ let
 in
 {
   options = {
-    perSystem = mkPerSystemOption ({ ...}: {
+    perSystem = mkPerSystemOption ({pkgs, config, ...}: {
       options = {
         extraPackages = mkOption {
           description = ''
@@ -29,6 +29,12 @@ in
           '';
           type = types.lazyAttrsOf types.package;
           default = {};
+        };
+      };
+
+      config = {
+        _module.args = {
+          poetryWithPlugins = selector: pkgs.poetry.withPlugins (_: selector config.poetryPlugins);
         };
       };
     });
