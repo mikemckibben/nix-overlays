@@ -23,9 +23,9 @@ in
           default = {};
         };
 
-        python3Packages = mkOption {
+        extraPython3Packages = mkOption {
           description = ''
-            Set of python3 packages to add to python packageOverrides
+            Set of python3 packages not in standard nixpkgs
           '';
           type = types.lazyAttrsOf types.package;
           default = {};
@@ -36,6 +36,9 @@ in
         _module.args = {
           poetryWithPlugins = selector: pkgs.poetry.withPlugins (_: selector config.poetryPlugins);
         };
+
+        # expose built-in supported poetry plugins by default
+        poetryPlugins = pkgs.poetry.plugins;
       };
     });
   };

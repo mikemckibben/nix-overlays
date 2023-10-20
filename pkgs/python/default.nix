@@ -9,10 +9,4 @@ in
     ./poetry-monorepo-dependency-plugin
   ];
 
-  perSystem = { pkgs, ... }: {
-
-    # expose built-in supported poetry plugins
-    poetryPlugins = pkgs.poetry.plugins;
-
-  };
 }
