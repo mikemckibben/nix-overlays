@@ -1,6 +1,6 @@
 { lib, flake-parts-lib, ...}:
 let
-  inherit (lib) mkOption types;
+  inherit (lib) mkOption mkEnableOption types;
   inherit (flake-parts-lib) mkPerSystemOption;
 in
 {
@@ -34,6 +34,7 @@ in
 
       config = {
         _module.args = {
+          # utility to create a bundled poetry package with plugins
           poetryWithPlugins = selector: pkgs.poetry.withPlugins (_: selector config.poetryPlugins);
         };
 
@@ -44,6 +45,8 @@ in
   };
 
   imports = [
+    ./modules/nixpkgs.nix
+    ./modules/odbc.nix
     ./pkgs/fly
     ./pkgs/python
   ];
