@@ -1,20 +1,11 @@
-{ lib, flake-parts-lib, ...}:
+{ lib, flake-parts-lib, perSystem, ...}:
 let
-  inherit (lib) concatMapStringsSep mkIf mkOption mkOptionDefault mkEnableOption types;
+  inherit (lib) concatMapStringsSep mkIf mkOption mkDefault mkEnableOption types;
   inherit (flake-parts-lib) mkPerSystemOption;
 in
 {
   options = {
     perSystem = mkPerSystemOption ({pkgs, config, ...}:
-    let
-      mkUnixODBCInst = concatMapStringsSep "\n" (pkg:
-        ''
-          [${pkg.fancyName}]
-          Description = ${pkg.meta.description}
-          Driver = ${pkg}/${pkg.driver}
-        ''
-      );
-    in
     {
       options = {
         odbc = mkOption {
@@ -33,13 +24,26 @@ in
               };
             };
           };
+          default = { enable = false; };
         };
-      };
-
-      config = mkIf (config.odbc.enable && (builtins.length config.odbc.drivers) != 0) {
-        packages.odbc = mkOptionDefault (pkgs.writeText "odbcinst.ini" (mkUnixODBCInst config.odbc.drivers));
       };
     });
   };
 
+  config = {
+    perSystem = { config, lib, pkgs, ... }:
+    let
+      mkUnixODBCInst = concatMapStringsSep "\n" (pkg:
+        ''
+          [${pkg.fancyName}]
+          Description = ${pkg.meta.description}
+          Driver = ${pkg}/${pkg.driver}
+        ''
+      );
+      cfg = config.odbc;
+    in
+    {
+      packages.odbc = mkIf (cfg.enable && (builtins.length cfg.drivers) != 0) (mkDefault (pkgs.writeText "odbcinst.ini" (mkUnixODBCInst cfg.drivers)));
+    };
+  };
 }

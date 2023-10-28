@@ -32,22 +32,23 @@ in
         };
       };
 
-      config = {
-        _module.args = {
-          # utility to create a bundled poetry package with plugins
-          poetryWithPlugins = selector: pkgs.poetry.withPlugins (_: selector config.poetryPlugins);
-        };
-
-        # expose built-in supported poetry plugins by default
-        poetryPlugins = pkgs.poetry.plugins;
-      };
     });
   };
 
   imports = [
     ./modules/nixpkgs.nix
     ./modules/odbc.nix
+    ./pkgs/cloudfoundry-cli
     ./pkgs/fly
     ./pkgs/python
   ];
+
+  config = {
+    perSystem = {config, pkgs, ...}: {
+      _module.args = {
+        # utility to create a bundled poetry package with plugins
+        poetryWithPlugins = selector: pkgs.poetry.withPlugins (ps: selector (ps // config.poetryPlugins));
+      };
+    };
+  };
 }
