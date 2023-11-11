@@ -12,6 +12,13 @@ in
       '';
       type = types.submodule {
         options = {
+          overlays = mkOption {
+            description = ''
+            nixpkgs overlays
+            '';
+            type = types.listOf (types.functionTo (types.unspecified));
+            default = [];
+          };
           config = mkOption {
             description = ''
             nixpkgs configuration options
@@ -25,11 +32,11 @@ in
     };
   };
 
-  config = mkIf (cfg.config != {}) {
+  config = mkIf (cfg.config != {} || cfg.overlays != []) {
     perSystem = {system, ...}: {
       _module.args.pkgs =  import inputs.nixpkgs {
         inherit system;
-        inherit (cfg) config;
+        inherit (cfg) config overlays;
       };
     };
   };
