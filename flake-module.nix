@@ -1,3 +1,4 @@
+{...}:
 { lib, flake-parts-lib, ...}:
 let
   inherit (lib) mkOption mkEnableOption types;

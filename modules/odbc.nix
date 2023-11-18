@@ -1,38 +1,38 @@
-{ lib, flake-parts-lib, perSystem, ...}:
+{ lib, flake-parts-lib, withSystem, perSystem, ...}:
 let
-  inherit (lib) concatMapStringsSep mkIf mkOption mkDefault mkEnableOption types;
-  inherit (flake-parts-lib) mkPerSystemOption;
-in
-{
-  options = {
-    perSystem = mkPerSystemOption ({pkgs, config, ...}:
-    {
-      options = {
-        odbc = mkOption {
-          description = ''
-            config option to control generating an odbcinst.init onfiguration package derivation
-          '';
-          type = types.submodule {
-            options = {
-              enable = mkEnableOption "odbc";
-              drivers = mkOption {
-                description = ''
-                Set of unixODBC driver packages to include in the odbcinst.ini system configuration
-                '';
-                type = types.listOf types.package;
-                default = [];
-              };
-            };
+  inherit (lib) concatMapStringsSep mkIf mkOption mkDefault mkEnableOption types optionalAttrs;
+  inherit (flake-parts-lib) mkPerSystemOption mkTransposedPerSystemModule;
+
+  odbcOptions = mkTransposedPerSystemModule {
+    name = "odbc";
+    option = mkOption {
+      description = ''
+      config option to control generating an odbcinst.ini onfiguration package derivation
+      '';
+      type = types.submodule {
+        options = {
+          enable = mkEnableOption "odbc";
+          drivers = mkOption {
+            description = ''
+            set of unixODBC driver packages to include in the odbcinst.ini system configuration
+            '';
+            type = types.listOf types.package;
+            default = [];
           };
-          default = { enable = false; };
         };
       };
-    });
+    };
+    file = ./odbc.nix;
   };
+in
+{
+  imports = [
+    odbcOptions
+  ];
 
-  config = {
-    perSystem = { config, lib, pkgs, ... }:
+  perSystem = { config, pkgs, ... }:
     let
+      # cfg = config.odbc;
       mkUnixODBCInst = concatMapStringsSep "\n" (pkg:
         ''
           [${pkg.fancyName}]
@@ -40,10 +40,12 @@ in
           Driver = ${pkg}/${pkg.driver}
         ''
       );
-      cfg = config.odbc;
     in
     {
-      packages.odbc = mkIf (cfg.enable && (builtins.length cfg.drivers) != 0) (mkDefault (pkgs.writeText "odbcinst.ini" (mkUnixODBCInst cfg.drivers)));
+      odbc.enable = mkDefault false;
+
+      packages = mkIf config.odbc.enable {
+        odbcinst = mkDefault (pkgs.writeText "odbcinst.ini" (mkUnixODBCInst config.odbc.drivers));
+      };
     };
-  };
 }

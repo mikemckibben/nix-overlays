@@ -11,15 +11,15 @@
       };
       doCheck = false;
       subPackages = [ "fly" ];
-      vendorSha256 = "sha256-Eyet5cXRpJxFQxiouPNUJcqr9VuQD+yR3vFgISg29Ok=";
+      vendorSha256 = "sha256-QS7F2DIOoOYEOPzWieV94kEAvJX64ExSXvBtlRaFZIo=";
       # vendorSha256 = lib.fakeSha256;
-      ldflags= ["-X github.com/concourse/concourse.Version=${version}"];
-      patches = [ ./patch-6.7.6 ];
-      # prePatch = ''
-      #   echo "replacing golang.org/x/sys module"
-      #   go mod edit -go=1.17 -replace golang.org/x/sys=golang.org/x/sys@
-      #   cat go.mod
-      # '';
+      ldflags= [
+        "-X github.com/concourse/concourse.Version=${version}"
+      ];
+
+      postInstall = ''
+        mv "$out/bin/fly" "$out/bin/fly6"
+      '';
     };
   };
 }
