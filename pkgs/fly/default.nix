@@ -11,8 +11,8 @@
       };
       doCheck = false;
       subPackages = [ "fly" ];
-      vendorSha256 = "sha256-QS7F2DIOoOYEOPzWieV94kEAvJX64ExSXvBtlRaFZIo=";
-      # vendorSha256 = lib.fakeSha256;
+      vendorHash = "sha256-QS7F2DIOoOYEOPzWieV94kEAvJX64ExSXvBtlRaFZIo=";
+      # vendorHash = lib.fakeSha256;
       ldflags= [
         "-X github.com/concourse/concourse.Version=${version}"
       ];
@@ -33,8 +33,8 @@
       };
       doCheck = false;
       subPackages = [ "fly" ];
-      vendorSha256 = "sha256-OF3parnlTPmcr7tVcc6495sUMRApSpBHHjSE/4EFIxE=";
-      # vendorSha256 = lib.fakeSha256;
+      vendorHash = "sha256-OF3parnlTPmcr7tVcc6495sUMRApSpBHHjSE/4EFIxE=";
+      # vendorHash = lib.fakeSha256;
       ldflags= [
         "-X github.com/concourse/concourse.Version=${version}"
       ];
