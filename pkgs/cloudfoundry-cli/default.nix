@@ -1,6 +1,6 @@
 {
   perSystem = { pkgs, ... }: {
-    extraPackages.cloudfoundry-cli-v7 = with pkgs; callPackage ({ lib, buildGoModule, fetchFromGitHub, fetchurl, installShellFiles }:
+    packages.cloudfoundry-cli-v7 = with pkgs; callPackage ({ lib, buildGoModule, fetchFromGitHub, fetchurl, installShellFiles }:
       buildGoModule rec {
         pname = "cloudfoundry-cli";
         version = "7.7.4";
@@ -31,7 +31,7 @@
       }
     ) {};
 
-    extraPackages.cloudfoundry-cli-v6 = with pkgs; callPackage ({ lib, buildGoModule, fetchFromGitHub, fetchurl, installShellFiles }:
+    packages.cloudfoundry-cli-v6 = with pkgs; callPackage ({ lib, buildGoModule, fetchFromGitHub, fetchurl, installShellFiles }:
       buildGoModule rec {
         pname = "cloudfoundry-cli";
         version = "6.53.0";

@@ -8,12 +8,21 @@ in
   options = {
     perSystem = mkPerSystemOption ({pkgs, config, ...}: {
       options = {
-        extraPackages = mkOption {
+
+        poetryPackage = mkOption {
           description = ''
-            Set of top-level packages either not in standard nixpkgs or using pinned versions
+            The poetry package to use for poetry plugins
           '';
-          type = types.lazyAttrsOf types.package;
-          default = {};
+          type = types.package;
+          default = pkgs.poetry;
+        };
+
+        pythonPackage = mkOption {
+          description = ''
+            The python package to use for building python packages
+          '';
+          type = types.package;
+          default = pkgs.python3;
         };
 
         poetryPlugins = mkOption {
@@ -24,13 +33,6 @@ in
           default = {};
         };
 
-        extraPython3Packages = mkOption {
-          description = ''
-            Set of python3 packages not in standard nixpkgs
-          '';
-          type = types.lazyAttrsOf types.package;
-          default = {};
-        };
       };
 
     });
@@ -40,6 +42,7 @@ in
     ./modules/nixpkgs.nix
     ./modules/odbc.nix
     ./pkgs/cloudfoundry-cli
+    ./pkgs/ffizer
     ./pkgs/fly
     ./pkgs/python
   ];
@@ -48,7 +51,7 @@ in
     perSystem = {config, pkgs, ...}: {
       _module.args = {
         # utility to create a bundled poetry package with plugins
-        poetryWithPlugins = selector: pkgs.poetry.withPlugins (ps: selector (ps // config.poetryPlugins));
+        poetryWithPlugins = selector: config.poetryPackage.withPlugins (ps: selector (ps // config.poetryPlugins));
       };
     };
   };

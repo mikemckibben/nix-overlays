@@ -1,6 +1,6 @@
 {
   perSystem = { lib, pkgs, ... }: {
-    extraPackages.fly6 = with pkgs; buildGoModule rec {
+    packages.fly6 = with pkgs; buildGoModule rec {
       pname = "fly";
       version = "6.7.6";
       src =  fetchFromGitHub {
@@ -22,7 +22,7 @@
       '';
     };
 
-    extraPackages.fly7 = with pkgs; buildGoModule rec {
+    packages.fly7 = with pkgs; buildGoModule rec {
       pname = "fly";
       version = "7.6.0";
       src =  fetchFromGitHub {
